@@ -2,7 +2,7 @@
 require 'data/data.php';
 
 // Recupero il valore del filtro parcheggi
-$filterdParking = $_GET['parking'] ?? '';
+$filterdParking = $_GET['parking_opions'] ?? '';
 
 // Nuovo array vuoto dove pusho gli hotel filtrati
 $filteredHotels = [];
@@ -11,6 +11,7 @@ $filteredHotels = [];
 if ($filterdParking === '2') {
   // Filtro gli Hotel con parcheggio
   foreach ($hotels as $hotel) {
+    // Se "parking" è true pusho nel nuovo array
       if ($hotel['parking']) {
           $filteredHotels[] = $hotel;
       }
@@ -18,6 +19,7 @@ if ($filterdParking === '2') {
 } elseif ($filterdParking === '3') {
   // Filtro gli Hotel senza parcheggio
   foreach ($hotels as $hotel) {
+    // Se "parking" è false pusho nel nuovo array
       if (!$hotel['parking']) {
           $filteredHotels[] = $hotel;
       }
@@ -43,7 +45,7 @@ if ($filterdParking === '2') {
 <body>
   <div class="container d-flex justify-content-end p-3">
     <form action="" method="GET" class="d-flex">
-      <select class="form-select" name="parking">
+      <select class="form-select" name="parking_opions">
       <option selected>Choose</option>
       <option value="1">All</option>
       <option value="2">Parking</option>
