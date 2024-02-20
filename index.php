@@ -1,6 +1,34 @@
 <?php
 require 'data/data.php';
+
+// Recupero il valore del filtro parcheggi
+$filterdParking = $_GET['parking'] ?? '';
+
+// Nuovo array vuoto dove pusho gli hotel filtrati
+$filteredHotels = [];
+
+//Filtro gli hotel in base alla select
+if ($filterdParking === '2') {
+  // Filtro gli Hotel con parcheggio
+  foreach ($hotels as $hotel) {
+      if ($hotel['parking']) {
+          $filteredHotels[] = $hotel;
+      }
+  }
+} elseif ($filterdParking === '3') {
+  // Filtro gli Hotel senza parcheggio
+  foreach ($hotels as $hotel) {
+      if (!$hotel['parking']) {
+          $filteredHotels[] = $hotel;
+      }
+  }
+} else {
+  //Non applico nessun filtro
+  $filteredHotels = $hotels;
+}
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +41,17 @@ require 'data/data.php';
   <title>Hotel</title>
 </head>
 <body>
+  <div class="container d-flex justify-content-end p-3">
+    <form action="" method="GET" class="d-flex">
+      <select class="form-select" name="parking">
+      <option selected>Choose</option>
+      <option value="1">All</option>
+      <option value="2">Parking</option>
+      <option value="3">No Parking</option>
+      </select>
+      <button type="submit" class="btn btn-primary ms-3">Search</button>
+    </form>
+  </div>
   <div class="container p-5">
   <h1 class="text-center">Hotels</h1>
     <table class="table">
@@ -26,7 +65,7 @@ require 'data/data.php';
         </tr>
       </thead>
       <tbody>
-        <?php foreach($hotels as $index => $hotel) : ?>
+        <?php foreach($filteredHotels as $index => $hotel) : ?>
         <tr>
           <td><?= $hotel['name'] ?></td>
           <td><?= $hotel['description'] ?></td>
